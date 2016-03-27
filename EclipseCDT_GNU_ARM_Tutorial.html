@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>EclipseCDT_GNU_ARM_Tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>Create ARM Cross Compile Environment Using Eclipse CDT</h1>
+<hr />
+<p>Last updated: 2015/04/09</p>
+<h2>Resources Preparation</h2>
+<ol>
+<li>
+<p>Download the latest JAVA installer. [<a href="http://java.com/zh_CN/">Download</a>]</p>
+</li>
+<li>
+<p>Download latest Eclipse IDE for C/C++ developers. [<a href="http://www.eclipse.org/downloads/packages/eclipse-ide-cc-developers/lunasr2">Download</a>]</p>
+</li>
+<li>
+<p>Download GNU ARM Eclipse plug-ins. [<a href="http://sourceforge.net/projects/gnuarmeclipse/">Download</a>]</p>
+</li>
+<li>
+<p>Download GNU ARM GCC Toolchain. [<a href="https://launchpad.net/gcc-arm-embedded">Download</a>]</p>
+</li>
+<li>
+<p>Download GNU ARM Build tools. [<a href="http://sourceforge.net/projects/gnuarmeclipse/files/Build%20Tools/gnuarmeclipse-build-tools-win32-2.4-201503242026-setup.exe/download">Download</a>]</p>
+</li>
+</ol>
+<h2>Theory Preparation</h2>
+<h4>What is Eclipse CDT?</h4>
+<p>Eclipse is an general platform for different program language development. You can use it to edit your source code and maintain your project. It allows you to install various plug-ins to suit your requirements. For C/C++ develpers, Eclipse provides a plug-in named <a href="http://eclipse.org/cdt/">CDT</a>, shorting for C/C++ Development Tooling. With the CDT, you can configure the C/C++ toolchain, maintain, build, download and debug your project.</p>
+<p>If you have downloaded the Eclipse IDE for C/C++ developers, then the CDT is defaultly installed with Eclipse and you can develop C/C++ projects on Eclipse IDE. But notice that the IDE DO NOT  suopport developing C/C++ project for ARM at this time. You can only create C/C++ project and build the target to run on Windows, MAC OSX and Linux. The instructions to make it support creating project for ARM will be listed in the following sections.</p>
+<h4>Why do we need to install JAVA on our PC?</h4>
+<p>Since the Eclipse IDE is created using JAVA language, so the Eclipse must running in the JAVA supported environment. It just like a fish borns in water, so it has to survive in water. It has to mention that if you are going to install the 32-bits Eclipse IDE, you need to install the latest 32-bits JAVA version. If you are going to install the 64-bits Eclipse IDE, you need to install the latest 64-bits JAVA version. Or error will occure when starting the Eclipse IDE.</p>
+<h4>What's the relationship between GNU Make and GNU GCC Toolchain?</h4>
+<p>The GNU Make is a tool to parse the makefile. Every time you run the make command, it just looks for a makefile in the current working directory and parse it.</p>
+<p>The GNU GCC Toolchain, including Assembler, Compiler, Linker, Debuger etc., is to make you generate and debug your target (e.g. executable program, HEX or binary file) from the source code. </p>
+<p>Without GNU Make, you have to compile your source code and link to target file manually. When your project is hude enough, then it is hard to compile your source files one by one. Besides, every time you building the target you have to compile all of your source files, since you don't known which file is modified since last compilation.</p>
+<p>A makefile is a build rules collection file. In the other words, the makefile contains all the commands when you build your target manually. When you run the make command, it will parse the makefile and execute the commands in it. So with GNU Make you can just run the make command to build your target. <br />
+<img src="./images/eclipse/Make_GCC.png" alt="Text" title="Make &amp; GCC" />  </p>
+<p>Besides the make command, sometimes we need other commands such as to remove the target files or echo some informations to the console. These tools is collected together and is so called Build tools.</p>
+<h2>Setup GNU ARM Build Tools and ARM GCC Toolchain</h2>
+<ol>
+<li>
+<p>Install the GNU ARM Build tools. Double click on the &quot;gnuarmeclipse-build-tools-win32-2.4-201503242026-setup.exe&quot; to begin the installation procedure. You can install it under any path you want, except the path that containing the unusual characters. E.g., I install it under &quot;F:\Eclipse\Build_Tools&quot;. These folders are listed like this: <br />
+<img src="./images/eclipse/buildtools_list.png" alt="Text" title="Build tools" /> <br />
+Under the &quot;bin&quot; folder, you will see the Build tools for ARM processors:    <br />
+<img src="./images/eclipse/BuildTools.png" alt="Text" title="Build tools" /> </p>
+</li>
+<li>
+<p>Unzip the downloaded ARM gcc toolchain zip package. Copy the folders in it to under any path you want, except the path that containing the unusual characters. E.g., I copy the folders under &quot;F:\Eclipse\Toolchain&quot;. These folders are listed like this:    <br />
+<img src="./images/eclipse/file_list.png" alt="Text" title="ARM GCC toolchain" />  <br />
+Under the &quot;bin&quot; folder, you will see the ARM gcc toolchain for ARM precessors:  <br />
+<img src="./images/eclipse/toolchain.png" alt="Text" title="ARM GCC toolchain" />  
+</p>
+</li>
+<li>
+<p><strong>[OPTIONAL]</strong> You can add the GNU ARM Build tools path and the GNU ARM GCC Toolchain path to the system PATH, so that other programs can invoke them without specifying their path.   
+</p>
+</li>
+</ol>
+<h2>Setup Eclipse IDE</h2>
+<ol>
+<li>
+<p>Install the latest JAVA version on your PC. If you are going to install the 32-bits Eclipse IDE, you need to install the latest 32-bits JAVA version. If you are going to install the 64-bits Eclipse IDE, you need to install the latest 64-bits JAVA version. Or error will occure when starting the Eclipse IDE.</p>
+</li>
+<li>
+<p>Unzip the downloaded Eclipse zip package. Extract the folder named &quot;eclipse&quot;. Copy it to under any path you want, except the path that containing the unusual characters. E.g., I copy the folders under &quot;F:\Eclipse&quot;. </p>
+</li>
+<li>
+<p>Open the &quot;eclipse&quot; folder and double click on the &quot;eclipse.exe&quot; to start the Eclipse IDE. If any error occures, make sure you have installed the correct JAVA version on your PC. Before the IDE showing up, a prompt window pops up to let you select the workspace path. A workspace is a folder to store your projects. If you CHECK the box &quot;Use this as the default and do not ask again&quot;, every time you start the IDE it will set this workspace as the default workspace. You can switch the workspace after the IDE showing up by clicking &quot;File &gt; Switch Workspace &gt; Other...&quot;  <br />
+<img src="./images/eclipse/workspace.png" alt="Text" title="Select workspace" /></p>
+</li>
+<li>
+<p>After the IDE showing up, it looks like the belowing picture.  <br />
+<img src="./images/eclipse/Eclipse_IDE.png" alt="Text" title="Eclipse IDE" /></p>
+</li>
+<li>
+<p>Click on the &quot;Help &gt; Installation Details&quot; on the menu bar. You will see that below the &quot;Installed Software&quot; tab, there is only the Eclipse CDT installed. And under the &quot;Plug-ins&quot; tab, there lists the plug-ins those has been installed in Eclipse.  <br />
+<img src="./images/eclipse/Installed_Software.png" alt="Text" title="Installed Software" /><br>   <br />
+<img src="./images/eclipse/Installed_Plugins.png" alt="Text" title="Installed Plug-ins" /></p>
+</li>
+<li>
+<p>Click on the &quot;Help &gt; Install New Software...&quot; on the menu bar.  <br />
+<img src="./images/eclipse/Install_Software.png" alt="Text" title="Install New Software" /><br />
+Click on the &quot;Add...&quot; button. It offers two methods to install a new sofware, either search the gived path to look for Eclipse plug-ins to install or select specified archive file.  <br />
+<img src="./images/eclipse/Archive.png" alt="Text" title="Plug-in path" /><br />
+Click on the &quot;Archive...&quot; button and navigate to the downloaded GNU ARM Eclipse Plug-ins(a .zip or .jar file) and select it. Then you will see that the plug-in name showed in the &quot;Name&quot; field as below.  <br />
+<img src="./images/eclipse/Selected_Archive.png" alt="Text" title="Plug-in name" /> <br />
+Keep clicking &quot;Next&quot; until it asks you whether accept the agreement. Just choose accept and click on &quot;Finish&quot; to begin installing progress.  <br />
+<img src="./images/eclipse/Licence.png" alt="Text" title="Licence" />  <br />
+During the installing progress, it will pop up a window to ask you whether continue the pregress, since the validity of the plug-in cannot be established. Just click on &quot;OK&quot; to continue.  <br />
+<img src="./images/eclipse/validate.png" alt="Text" title="Validate" /> <br />
+After the plug-in is installed, it asks you ao restart the Eclipse to make the new installed plug-in take effect. Just click on &quot;Yes&quot; to restart the Eclipse. <br />
+<img src="./images/eclipse/restart.png" alt="Text" title="Restart" />   
+</p>
+</li>
+<li>
+<p>After the Eclipse restarted, click on the &quot;Help &gt; Installation Details&quot; on the menu bar. You will see that below the &quot;Installed Software&quot; tab, the GNU ARM Plug-ins have been installed. But it doesn't mean that you can develop applications for ARM now, since the plug-ins do not contain the ARM gcc toolchain and Build tools. It only support that you can create a project based on the ARM gcc toolchain. We need to tell the Eclipse where they locate so that Eclipse can invoke them to build the project. <br />
+<img src="./images/eclipse/Plugins_Installed.png" alt="Text" title="Installed Softwares" />   
+</p>
+</li>
+<li>
+<p>Click on the &quot;Windows &gt; Preferences&quot; on the menu bar. Expand the &quot;C/C++ &gt; Build&quot; option and click on the &quot;Global Tools Paths&quot; tag. Browse to select the Build tools folder. Select the default toolchain to be &quot;GNU Tools for ARM Embedded processors&quot; and browse to select the Toolchain folder. <br />
+<img src="./images/eclipse/Global_Path.png" alt="Text" title="Global Tools Paths" />   
+</p>
+</li>
+<li>
+<p>Now you can develop your applications for ARM processors on Eclipse IDE now!</p>
+</li>
+</ol>
+<h2>New C Project</h2>
+<h2>New Makefile Project with Existing code</h2>
+<p>Specify the makefile path:
+<img src="./images/eclipse/makefile_path.png" alt="Text" title="default PATH" /> </p>
+<h2>FAQ</h2>
+<ol>
+<li>
+<p>If we create a new Makefile project with existing code and the existing code contain its own toolchain, when building the project, it would prompt that &quot;incorrect 'make' used&quot;. This is because of eclipse invoking the default 'make' tool that from where the variable &quot;PATH&quot; specified. Eclipse will search the &quot;make&quot; tool in the paths that the &quot;PATH&quot; variable specified one by one from the first path to the end path. <br />
+<img src="./images/eclipse/path1.png" alt="Text" title="default PATH" />   
+</p>
+<ul>
+<li>
+<p>If we put the path of the &quot;make&quot; tool which provided by the existing code to the first location of the &quot;PATH&quot; variable, when building the project, eclipse will firstly search the &quot;make&quot; tool in the path we just add to so that it will invoke the self-providing &quot;make&quot; tool. For example, if the self-providing &quot;make&quot; tool locates at &quot;F:\Eclipse\WICED-SDK-3.3.1\WICED_SDK331&quot;, we just click the &quot;Edit...&quot; button to add this path in front of the &quot;PATH&quot; content:      <br />
+<img src="./images/eclipse/path2.png" alt="Text" title="Specified PATH" />   
+</p>
+</li>
+<li>
+<p>We can disable the default build command, instead of using a specified build command. Uncheck the box of &quot;Use default build command&quot; and select the &quot;Variables...&quot;     <br />
+<img src="./images/eclipse/build_command.png" alt="Text" title="Build command" /><br />
+Choose the variable &quot;workspace_loc&quot; and then full fill the relative path of the make tool:   <br />
+<img src="./images/eclipse/build_command1.png" alt="Text" title="Build command" />  
+</p>
+</li>
+</ul>
+</li>
+</ol>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

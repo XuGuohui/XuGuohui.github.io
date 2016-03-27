@@ -323,21 +323,21 @@ img {
 <p>The GNU GCC Toolchain, including Assembler, Compiler, Linker, Debuger etc., is to make you generate and debug your target (e.g. executable program, HEX or binary file) from the source code. </p>
 <p>Without GNU Make, you have to compile your source code and link to target file manually. When your project is hude enough, then it is hard to compile your source files one by one. Besides, every time you building the target you have to compile all of your source files, since you don't known which file is modified since last compilation.</p>
 <p>A makefile is a build rules collection file. In the other words, the makefile contains all the commands when you build your target manually. When you run the make command, it will parse the makefile and execute the commands in it. So with GNU Make you can just run the make command to build your target. <br />
-<img src="./images/eclipse/Make_GCC.png" alt="Text" title="Make &amp; GCC" />  </p>
+<img src="./../images/eclipse/Make_GCC.png" alt="Text" title="Make &amp; GCC" />  </p>
 <p>Besides the make command, sometimes we need other commands such as to remove the target files or echo some informations to the console. These tools is collected together and is so called Build tools.</p>
 <h2>Setup GNU ARM Build Tools and ARM GCC Toolchain</h2>
 <ol>
 <li>
 <p>Install the GNU ARM Build tools. Double click on the &quot;gnuarmeclipse-build-tools-win32-2.4-201503242026-setup.exe&quot; to begin the installation procedure. You can install it under any path you want, except the path that containing the unusual characters. E.g., I install it under &quot;F:\Eclipse\Build_Tools&quot;. These folders are listed like this: <br />
-<img src="./images/eclipse/buildtools_list.png" alt="Text" title="Build tools" /> <br />
+<img src="./../images/eclipse/buildtools_list.png" alt="Text" title="Build tools" /> <br />
 Under the &quot;bin&quot; folder, you will see the Build tools for ARM processors:    <br />
-<img src="./images/eclipse/BuildTools.png" alt="Text" title="Build tools" /> </p>
+<img src="./../images/eclipse/BuildTools.png" alt="Text" title="Build tools" /> </p>
 </li>
 <li>
 <p>Unzip the downloaded ARM gcc toolchain zip package. Copy the folders in it to under any path you want, except the path that containing the unusual characters. E.g., I copy the folders under &quot;F:\Eclipse\Toolchain&quot;. These folders are listed like this:    <br />
-<img src="./images/eclipse/file_list.png" alt="Text" title="ARM GCC toolchain" />  <br />
+<img src="./../images/eclipse/file_list.png" alt="Text" title="ARM GCC toolchain" />  <br />
 Under the &quot;bin&quot; folder, you will see the ARM gcc toolchain for ARM precessors:  <br />
-<img src="./images/eclipse/toolchain.png" alt="Text" title="ARM GCC toolchain" />  
+<img src="./../images/eclipse/toolchain.png" alt="Text" title="ARM GCC toolchain" />  
 </p>
 </li>
 <li>
@@ -355,40 +355,40 @@ Under the &quot;bin&quot; folder, you will see the ARM gcc toolchain for ARM pre
 </li>
 <li>
 <p>Open the &quot;eclipse&quot; folder and double click on the &quot;eclipse.exe&quot; to start the Eclipse IDE. If any error occures, make sure you have installed the correct JAVA version on your PC. Before the IDE showing up, a prompt window pops up to let you select the workspace path. A workspace is a folder to store your projects. If you CHECK the box &quot;Use this as the default and do not ask again&quot;, every time you start the IDE it will set this workspace as the default workspace. You can switch the workspace after the IDE showing up by clicking &quot;File &gt; Switch Workspace &gt; Other...&quot;  <br />
-<img src="./images/eclipse/workspace.png" alt="Text" title="Select workspace" /></p>
+<img src="./../images/eclipse/workspace.png" alt="Text" title="Select workspace" /></p>
 </li>
 <li>
 <p>After the IDE showing up, it looks like the belowing picture.  <br />
-<img src="./images/eclipse/Eclipse_IDE.png" alt="Text" title="Eclipse IDE" /></p>
+<img src="./../images/eclipse/Eclipse_IDE.png" alt="Text" title="Eclipse IDE" /></p>
 </li>
 <li>
 <p>Click on the &quot;Help &gt; Installation Details&quot; on the menu bar. You will see that below the &quot;Installed Software&quot; tab, there is only the Eclipse CDT installed. And under the &quot;Plug-ins&quot; tab, there lists the plug-ins those has been installed in Eclipse.  <br />
-<img src="./images/eclipse/Installed_Software.png" alt="Text" title="Installed Software" /><br>   <br />
-<img src="./images/eclipse/Installed_Plugins.png" alt="Text" title="Installed Plug-ins" /></p>
+<img src="./../images/eclipse/Installed_Software.png" alt="Text" title="Installed Software" /><br>   <br />
+<img src="./../images/eclipse/Installed_Plugins.png" alt="Text" title="Installed Plug-ins" /></p>
 </li>
 <li>
 <p>Click on the &quot;Help &gt; Install New Software...&quot; on the menu bar.  <br />
-<img src="./images/eclipse/Install_Software.png" alt="Text" title="Install New Software" /><br />
+<img src="./../images/eclipse/Install_Software.png" alt="Text" title="Install New Software" /><br />
 Click on the &quot;Add...&quot; button. It offers two methods to install a new sofware, either search the gived path to look for Eclipse plug-ins to install or select specified archive file.  <br />
-<img src="./images/eclipse/Archive.png" alt="Text" title="Plug-in path" /><br />
+<img src="./../images/eclipse/Archive.png" alt="Text" title="Plug-in path" /><br />
 Click on the &quot;Archive...&quot; button and navigate to the downloaded GNU ARM Eclipse Plug-ins(a .zip or .jar file) and select it. Then you will see that the plug-in name showed in the &quot;Name&quot; field as below.  <br />
-<img src="./images/eclipse/Selected_Archive.png" alt="Text" title="Plug-in name" /> <br />
+<img src="./../images/eclipse/Selected_Archive.png" alt="Text" title="Plug-in name" /> <br />
 Keep clicking &quot;Next&quot; until it asks you whether accept the agreement. Just choose accept and click on &quot;Finish&quot; to begin installing progress.  <br />
-<img src="./images/eclipse/Licence.png" alt="Text" title="Licence" />  <br />
+<img src="./../images/eclipse/Licence.png" alt="Text" title="Licence" />  <br />
 During the installing progress, it will pop up a window to ask you whether continue the pregress, since the validity of the plug-in cannot be established. Just click on &quot;OK&quot; to continue.  <br />
-<img src="./images/eclipse/validate.png" alt="Text" title="Validate" /> <br />
+<img src="./../images/eclipse/validate.png" alt="Text" title="Validate" /> <br />
 After the plug-in is installed, it asks you ao restart the Eclipse to make the new installed plug-in take effect. Just click on &quot;Yes&quot; to restart the Eclipse. <br />
-<img src="./images/eclipse/restart.png" alt="Text" title="Restart" />   
+<img src="./../images/eclipse/restart.png" alt="Text" title="Restart" />   
 </p>
 </li>
 <li>
 <p>After the Eclipse restarted, click on the &quot;Help &gt; Installation Details&quot; on the menu bar. You will see that below the &quot;Installed Software&quot; tab, the GNU ARM Plug-ins have been installed. But it doesn't mean that you can develop applications for ARM now, since the plug-ins do not contain the ARM gcc toolchain and Build tools. It only support that you can create a project based on the ARM gcc toolchain. We need to tell the Eclipse where they locate so that Eclipse can invoke them to build the project. <br />
-<img src="./images/eclipse/Plugins_Installed.png" alt="Text" title="Installed Softwares" />   
+<img src="./../images/eclipse/Plugins_Installed.png" alt="Text" title="Installed Softwares" />   
 </p>
 </li>
 <li>
 <p>Click on the &quot;Windows &gt; Preferences&quot; on the menu bar. Expand the &quot;C/C++ &gt; Build&quot; option and click on the &quot;Global Tools Paths&quot; tag. Browse to select the Build tools folder. Select the default toolchain to be &quot;GNU Tools for ARM Embedded processors&quot; and browse to select the Toolchain folder. <br />
-<img src="./images/eclipse/Global_Path.png" alt="Text" title="Global Tools Paths" />   
+<img src="./../images/eclipse/Global_Path.png" alt="Text" title="Global Tools Paths" />   
 </p>
 </li>
 <li>
@@ -398,24 +398,24 @@ After the plug-in is installed, it asks you ao restart the Eclipse to make the n
 <h2>New C Project</h2>
 <h2>New Makefile Project with Existing code</h2>
 <p>Specify the makefile path:
-<img src="./images/eclipse/makefile_path.png" alt="Text" title="default PATH" /> </p>
+<img src="./../images/eclipse/makefile_path.png" alt="Text" title="default PATH" /> </p>
 <h2>FAQ</h2>
 <ol>
 <li>
 <p>If we create a new Makefile project with existing code and the existing code contain its own toolchain, when building the project, it would prompt that &quot;incorrect 'make' used&quot;. This is because of eclipse invoking the default 'make' tool that from where the variable &quot;PATH&quot; specified. Eclipse will search the &quot;make&quot; tool in the paths that the &quot;PATH&quot; variable specified one by one from the first path to the end path. <br />
-<img src="./images/eclipse/path1.png" alt="Text" title="default PATH" />   
+<img src="./../images/eclipse/path1.png" alt="Text" title="default PATH" />   
 </p>
 <ul>
 <li>
 <p>If we put the path of the &quot;make&quot; tool which provided by the existing code to the first location of the &quot;PATH&quot; variable, when building the project, eclipse will firstly search the &quot;make&quot; tool in the path we just add to so that it will invoke the self-providing &quot;make&quot; tool. For example, if the self-providing &quot;make&quot; tool locates at &quot;F:\Eclipse\WICED-SDK-3.3.1\WICED_SDK331&quot;, we just click the &quot;Edit...&quot; button to add this path in front of the &quot;PATH&quot; content:      <br />
-<img src="./images/eclipse/path2.png" alt="Text" title="Specified PATH" />   
+<img src="./../images/eclipse/path2.png" alt="Text" title="Specified PATH" />   
 </p>
 </li>
 <li>
 <p>We can disable the default build command, instead of using a specified build command. Uncheck the box of &quot;Use default build command&quot; and select the &quot;Variables...&quot;     <br />
-<img src="./images/eclipse/build_command.png" alt="Text" title="Build command" /><br />
+<img src="./../images/eclipse/build_command.png" alt="Text" title="Build command" /><br />
 Choose the variable &quot;workspace_loc&quot; and then full fill the relative path of the make tool:   <br />
-<img src="./images/eclipse/build_command1.png" alt="Text" title="Build command" />  
+<img src="./../images/eclipse/build_command1.png" alt="Text" title="Build command" />  
 </p>
 </li>
 </ul>

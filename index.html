@@ -1,69 +1,78 @@
 <!DOCTYPE html>
-
 <html>
+    <head>
+        <style type="text/css">
+            /*h1 {
+                background-color:gray;
+                color:cyan;
+                font-family:times;
+                font-size:30px
+            }
+            p {
+                color:black
+            }*/
+            .body {
+                background-color:white;
+                color:black;
+                margin:20px;
+                padding:20px;
+            }
+            .logo {
+                margin:10px;
+                padding:10px;
+            }
+        </style>
+    </head>
+    <!-- <body onload="loadPage()"> -->
+    <body background="images/background.jpg">
+        <div class="logo" align="center">
+            <!-- <img src="images/logo.jpg"> -->
+            <!-- <a href="https://www.github.com"> <img src="images/logo.jpg"> </a> -->
+            <a href="https://www.github.com" target="_blank"> <img src="images/logo1.png" alt="logo" height="80px" width="80px"> </a>
+        </div>
 
-<head>
+        <div class="body">
+            <h1> About </h1>
+            <p>
+                This a WiKi page for sharing tutorials in the embedded electronic world. 
+            </p>
+            <p>
+                All of the source code mentioned in the tutorils, as well as the documentations can be obtained at:
+                <a href="https://github.com/XuGuohui?tab=repositories" target="_blank"> https://github.com/XuGuohui?tab=repositories </a>
+            </p>
+        </div>
 
-<style type="text/css">
+        <div class="body">
+            <h1> Articles </h1>
+            <ol start="1">
+                <li> <a href="./html/EclipseCDT_GNU_ARM_Tutorial.html" target="_blank" style="text-decoration:none"> Tutorial: Create ARM Cross Compile Environment Using Eclipse CDT </a> </li>
+            </ol>
+        </div>
 
-h1 {background-color:gray; color:cyan; font-family:times; font-size:30px}
-p {color:black}
+        <hr />
+        
+        <p style="text-align:center; font-size:20px" >
+            <b> Copyright &copy 2016 GuohuiXu. All Rights Reserved. </b>
+        </p>
 
-</style>
+        <table border="1" align="center">
+            <caption> Information </caption>
+            <tr>
+                <th> Date </th>
+                <td> 2016-09-25 </td>
+            </tr>
+            <tr>
+                <th> Author </th>
+                <td> Guohui Xu </td>
+            </tr>
 
-</head>
+        </table>
 
-<!--
-<body onload="loadPage()">
--->
-<body background="images/background.jpg">
+    </body>
 
-<!-- <img src="images/logo.jpg"> -->
-<!-- <a href="https://www.github.com"> <img src="images/logo.jpg"> </a> -->
-<a href="https://www.github.com" target="_blank"> <img src="images/logo.jpg" alt="logo"> </a>
-
-<h1> About </h1>
-
-<p>
-This a WiKi page for sharing tutorials in the embedded electronic world. 
-</p>
-
-<p>
-All of the source code mentioned in the tutorils, as well as the documentations can be obtained at:
-
-<a href="https://github.com/XuGuohui?tab=repositories"> https://github.com/XuGuohui?tab=repositories </a>
-</p>
-
-<h1> Articles </h1>
-
-<a href="./html/EclipseCDT_GNU_ARM_Tutorial.html" target="_blank"> 1. Tutorial: Configuring eclipse environment for ARM embedded development </a>
-
-<hr />
-
-<table border="1" align="center">
-
-<caption> Information </caption>
-
-<tr>
-<th> Date </th>
-<td> 2016-09-21 </td>
-</tr>
-
-<tr>
-<th> Author </th>
-<td> Guohui Xu </td>
-</tr>
-
-</table>
-
-</body>
-
-<script>
-
-function loadPage() {
-  window.location = "html/EclipseCDT_GNU_ARM_Tutorial.html"
-}
-
-</script>
-
+    <script>
+        function loadPage() {
+            window.location = "html/EclipseCDT_GNU_ARM_Tutorial.html"
+        }
+    </script>
 </html>

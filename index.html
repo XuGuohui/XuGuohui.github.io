@@ -32,64 +32,57 @@
         </div>
 
         <div class="body">
-            <h1> About </h1>
+            <h1> Terms </h1>
             <p>
-                This a WiKi page for sharing tutorials in the embedded electronic world. 
+                All of the articles and gists here are input by myself word by word. Anyone can <b>NOT</b> copy these articles and gists or part of them to paste somewhere public,
+                since I was suffering from the waste of time scrolling screen to filter out lots of duplicate searching result. I think every article on the internet 
+                should be unique, even though some of them are similar, but we can learn different opinions, not just click in and back return after seeing the totally
+                the same words with only different format or layout. It's really a waste of time and annoying.
             </p>
             <p>
-                All of the source code mentioned in the tutorils, as well as the documentations can be obtained at:
-                <a href="https://github.com/XuGuohui?tab=repositories" target="_blank"> https://github.com/XuGuohui?tab=repositories </a>
+                All of the articles and gists can be found at:
+                <a href="https://github.com/XuGuohui/XuGuohui.github.io" target="_blank"> https://github.com/XuGuohui/XuGuohui.github.io</a> 
+                Anyone who like to share their experience and opinions on embedded world are welcomed! Simply fork 
+                <a href="https://github.com/XuGuohui/XuGuohui.github.io" target="_blank">this</a> repository and contribute to it.
+            </p>
+            <p>
+                BIG THANK YOU! <3
             </p>
         </div>
 
         <div class="body">
             <h1> Articles </h1>
             <ol start="1">
-                <li> <a href="./html/EclipseCDT_GNU_ARM_Tutorial.html" target="_blank" style="text-decoration:none"> Tutorial: Create ARM Cross Compile Environment Using Eclipse CDT </a> </li>
+                <li> <a href="./html/Articles/EclipseCDT_GNU_ARM_Tutorial.html" target="_blank" style="text-decoration:none"> Create ARM Cross Compile Environment Using Eclipse CDT </a> </li>
             </ol>
         </div>
         
-        <p>
-            If a symbol is presented in SECTION{} or assigned by PROVIDED(symbol = expression) explicitly, then you can refer to this symbol in
-            your source code. Note that the value of a symbol is the address for the symbol, so when you refer to a symbol, you need to declare 
-            the symbol with 'extern' keyword, e.g.: 
-            
-                extern unsigned char link_ram_start_location;
-            
-            It doesn't matter what type you declare the symbol, it is just a symbol. You can also declare it as:
-            
-                extern void *link_ram_start_location;
-                extern unsigned int link_ram_start_location;
-            
-            Since the value of a symbol assigned in linker script is an address, when you refer to this symbol, usually it is used with '&' preffixed:
-            
-                value_of_symbol = &link_ram_start_location;
-            
-            Image that the 'link_ram_start_location' is a variable in your source code, and the address of the variable is assigned in linker script, so
-            '&lin_ram_start_location' is the value which is assigned in linker script. 
-            
-            If 
-            
-                value_of_symbol = link_ram_start_location;
-            
-            then the 'value_of_symbol' should be the content of the address which is assigned to 'lin_ram_start_location' in linker script.
-        </p>
+        <div class="body">
+            <h1> Gists </h1>
+            <ol start="1">
+                <li> <a href="./html/Gists/LinkerScript.html" target="_blank" style="text-decoration:none"> LinkerScript </a> </li>
+            </ol>
+        </div>
 
         <hr />
         
         <p style="text-align:center; font-size:20px" >
-            <b> Copyright &copy 2016 GuohuiXu. All Rights Reserved. </b>
+            <b> Copyright &copy 2016 Guohui Xu. All Rights Reserved. </b>
         </p>
 
         <table border="1" align="center">
-            <caption> Information </caption>
+            <!-- <caption> more </caption> -->
             <tr>
-                <th> Date </th>
-                <td> 2016-09-25 </td>
+                <th> Last Update </th>
+                <td> 2016-10-29 </td>
             </tr>
             <tr>
                 <th> Author </th>
                 <td> Guohui Xu </td>
+            </tr>
+            <tr>
+                <th> Blog </th>
+                <td> <a href="http://weibo.com/1750776097/profile?topnav=1&wvr=6&is_all=1" target="_blank" style="text-decoration:none"> http://weibo.com/1750776097/profile?topnav=1&wvr=6&is_all=1 </a> </td>
             </tr>
 
         </table>

@@ -293,7 +293,12 @@ img {
 <body>
 <h1>Linker Script</h1>
 <hr />
-<p>Last updated: 2016/10/29</p>
+<p>Last updated: 2016/11/1  <br />
+Edited by: Guohui Xu</p>
+<h3><a href="https://github.com/XuGuohui/XuGuohui.github.io/blob/master/markdown/Gists/LinkerScript.md">Contribute to this file</a></h3>
+<h2>What is LMA and VMA</h2>
+<p>LMA, shorted for Load Memory Address, specifies the address where an output section should be placed when downloading it. It influences what the final image looks like before running. The final image is a binary file containing 0 and 1, without any address and debug informations. Usually, a program should be loaded into flash so that it won't lost when power off. Thus, all output sections should be located at flash region by specifying the LMA.</p>
+<p>VMA, Virtual Memory Address, specifies the address of a symbol when it is referenced in code at run time. For example, a viariable <code>x</code> is assigned with <code>1</code> in source code, before linking we don't know what the address of <code>x</code> is, so that we just assign <code>1</code> to a symbol. During linking, as we specifying the VMA, the linker then know where the <code>x</code> is at run time, then it will tell the program that the <code>1</code> should be put into the run time address of the <code>x</code>.</p>
 <h2>Reference the symbol defined in linker script in your source code</h2>
 <p>If a symbol is presented in <code>SECTION{}</code> or assigned by <code>PROVIDED(symbol = expression)</code> explicitly, then you can refer to this symbol in
 your source code. Note that the value of a symbol is the address for the symbol, so when you refer to a symbol, you need to declare 
@@ -316,7 +321,7 @@ extern unsigned int link_ram_start_location;
 <pre><code>value_of_symbol = link_ram_start_location;
 </code></pre>
 
-<p>then the <code>value_of_symbol</code> should be the content of the address which is assigned to 'lin<em>ram</em>start_location' in linker script.</p>
+<p>then the <code>value_of_symbol</code> should be the content of the address which is assigned to <code>lin_ram_start_location</code> in linker script.</p>
 
 </body>
 </html>

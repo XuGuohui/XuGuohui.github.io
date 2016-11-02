@@ -17,8 +17,26 @@ VMA, Virtual Memory Address, specifies the address of a symbol when it is refere
 
 [>> More details on sourceware.org](https://sourceware.org/binutils/docs/ld/Source-Code-Reference.html#Source-Code-Reference)
 
+Symbols are organized as a symbol table in object files. For example, there are three global varialbles in source code:
+
+```
+int x;
+char *y;
+char z[];
+```
+
+After being compiled in object file:
+
+| symbol | address     | value  |
+|:------:|:-----------:|:------:|
+| x      | &x          | int    |
+| y      | &y          | char * |
+| z      | z           | char[] |
+
+Note: the address is settled down after linking.
+
 If a symbol is presented in `SECTION{}` or assigned by `PROVIDED(symbol = expression)` explicitly, then you can refer to this symbol in
-your source code. Note that the value of a symbol is the address for the symbol, so when you refer to a symbol, you need to declare 
+your source code. Note that the value of a symbol is the address for the symbol. To reference a symbol, you need to declare 
 the symbol with `extern` keyword, e.g.: 
 
     extern unsigned char link_ram_start_location;
@@ -31,9 +49,17 @@ It doesn't matter what type you declare the symbol, it is just a symbol. You can
 Since the value of a symbol assigned in linker script is an address, when you refer to this symbol, usually it is used with `&` preffixed:
 
     value_of_symbol = &link_ram_start_location;
+    
+Particularly, if you declare the symbol as an array or vector, then the array name stands for the begining address of the array. In this case, you should not prefix the symbol with `&`. See this example:
 
-Image that the `link_ram_start_location` is a variable in your source code, and the address of the variable is assigned in linker script, so
-`&lin_ram_start_location` is the value which is assigned in linker script. 
+```
+extern char *link_ram_start_location1;
+extern char link_ram_start_location2[];
+```
+
+The `memcpy(&link_ram_start_location1, src_addr, length);` will set the destination address to be the value assigned to `link_ram_start_location1` in linker script. The `memcpy(link_ram_start_location2, src_addr, length);` has the same effect, but without `&` prefixed.
+
+Image that the `link_ram_start_location` is a variable in your source code, and the address of the variable is assigned in linker script, so `&lin_ram_start_location` is the value which is assigned in linker script. 
 
 If 
 

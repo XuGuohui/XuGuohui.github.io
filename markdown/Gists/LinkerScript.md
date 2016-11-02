@@ -15,6 +15,8 @@ VMA, Virtual Memory Address, specifies the address of a symbol when it is refere
 
 ## Reference the symbol defined in linker script in your source code ##
 
+[>> More details on sourceware.org](https://sourceware.org/binutils/docs/ld/Source-Code-Reference.html#Source-Code-Reference)
+
 If a symbol is presented in `SECTION{}` or assigned by `PROVIDED(symbol = expression)` explicitly, then you can refer to this symbol in
 your source code. Note that the value of a symbol is the address for the symbol, so when you refer to a symbol, you need to declare 
 the symbol with `extern` keyword, e.g.: 

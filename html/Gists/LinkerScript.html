@@ -300,8 +300,20 @@ Edited by: Guohui Xu</p>
 <p>LMA, shorted for Load Memory Address, specifies the address where an output section should be placed when downloading it. It influences what the final image looks like before running. The final image is a binary file containing 0 and 1, without any address and debug informations. Usually, a program should be loaded into flash so that it won't lost when power off. Thus, all output sections should be located at flash region by specifying the LMA.</p>
 <p>VMA, Virtual Memory Address, specifies the address of a symbol when it is referenced in code at run time. For example, a viariable <code>x</code> is assigned with <code>1</code> in source code, before linking we don't know what the address of <code>x</code> is, so that we just assign <code>1</code> to a symbol. During linking, as we specifying the VMA, the linker then know where the <code>x</code> is at run time, then it will tell the program that the <code>1</code> should be put into the run time address of the <code>x</code>.</p>
 <h2>Reference the symbol defined in linker script in your source code</h2>
+<p><a href="https://sourceware.org/binutils/docs/ld/Source-Code-Reference.html#Source-Code-Reference">&gt;&gt; More details on sourceware.org</a></p>
+<p>Symbols are organized as a symbol table in object files. For example, there are three global varialbles in source code:</p>
+<p><code>int x;
+char *y;
+char z[];</code></p>
+<p>After being compiled in object file:</p>
+<p>| symbol | address     | value  |
+|:------:|:-----------:|:------:|
+| x      | &amp;x          | int    |
+| y      | &amp;y          | char * |
+| z      | z           | char[] |</p>
+<p>Note: the address is settled down after linking.</p>
 <p>If a symbol is presented in <code>SECTION{}</code> or assigned by <code>PROVIDED(symbol = expression)</code> explicitly, then you can refer to this symbol in
-your source code. Note that the value of a symbol is the address for the symbol, so when you refer to a symbol, you need to declare 
+your source code. Note that the value of a symbol is the address for the symbol. To reference a symbol, you need to declare 
 the symbol with <code>extern</code> keyword, e.g.: </p>
 <pre><code>extern unsigned char link_ram_start_location;
 </code></pre>
@@ -315,8 +327,11 @@ extern unsigned int link_ram_start_location;
 <pre><code>value_of_symbol = &amp;link_ram_start_location;
 </code></pre>
 
-<p>Image that the <code>link_ram_start_location</code> is a variable in your source code, and the address of the variable is assigned in linker script, so
-<code>&amp;lin_ram_start_location</code> is the value which is assigned in linker script. </p>
+<p>Particularly, if you declare the symbol as an array or vector, then the array name stands for the begining address of the array. In this case, you should not prefix the symbol with <code>&amp;</code>. See this example:</p>
+<p><code>extern char *link_ram_start_location1;
+extern char link_ram_start_location2[];</code></p>
+<p>The <code>memcpy(&amp;link_ram_start_location1, src_addr, length);</code> will set the destination address to be the value assigned to <code>link_ram_start_location1</code> in linker script. The <code>memcpy(link_ram_start_location2, src_addr, length);</code> has the same effect, but without <code>&amp;</code> prefixed.</p>
+<p>Image that the <code>link_ram_start_location</code> is a variable in your source code, and the address of the variable is assigned in linker script, so <code>&amp;lin_ram_start_location</code> is the value which is assigned in linker script. </p>
 <p>If </p>
 <pre><code>value_of_symbol = link_ram_start_location;
 </code></pre>

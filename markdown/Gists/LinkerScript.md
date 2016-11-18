@@ -1,10 +1,64 @@
 # Linker Script #
 
 ---
-Last updated: 2016/11/1    
+Last updated: 2016/11/19   
 Edited by: Guohui Xu
 
 ### [Contribute to this file](https://github.com/XuGuohui/XuGuohui.github.io/blob/master/markdown/Gists/LinkerScript.md)###
+
+
+## How the entry point effect the link output
+
+In general, everything exits for some reason, the same as the entry point when linking a program. Let's image this scene:
+
+1. We have a program, the source code of which is made up of three functions: `funca()`, `func2()` and `func3()`.
+2. Both `func1()` and `func2()` invoke the `func3()`.
+
+Then how will the program execute? It depends on the link behaviour. But how does the linker know where to begin the link procedure? 
+
+1. Link the `func1()` and `func3()`?
+2. Link the `func2()` and `func3()`?
+
+To get this question resolved, we should knoe how does the linker behave during linking. The compiler compiles the source code and generates the object files, which contain the symbols to be linked together. When linking, the linker checks what symbols are needed and what should be discarded. For instance, if the `func1()` is needed, then `func3()` is also needed in output, since the `func1()` references the `func3()`. Similarly, if the `func2()` is needed. then `func3()` is also needed in output.
+
+But how does the linker know the symbol to be linked first to finally generate the target program? `func1()` or `func2()`? So, we need to tell the linker the first instruction to begin the link procedure, that is what the entry point does. If we specify the entry point to be `func1()` (i.e. the address of the first instruction of `func1()`), then the linker will link symbols begining with the `func1()`, which will result the final program running like this:
+
+`func1() -> func3() -> exit`
+
+If we specify the entry point to be `func2()`, then the linker will link symbols begining with the `func2()`, which will result the final program running like this:
+
+`func2() -> func3() -> exit`
+
+If we specify the entry point to be `func3()`, then the linker will link symbols begining with the `func3()`, which will result the final program running like this:
+
+`func3() -> exit`
+
+After all referenced symbols are linked, the unreferenced symbols will be discarded if `--gc-sections` is specified when linking, or they are kept in final program. If the `--gc-sections` is specified, you can still keep some symbols by prefix the `KEEP()` keyword in linker script.
+
+**Note** : If a symbol is kept in the output because of one of the following situation:
+
+1. It is specified as the entry point
+2. It is referenced by previously linked symbols
+3. It is unreferenced but `--gc-sections` is not specified
+4. It is prefix with the `KEEP()` keyword in linker script
+
+then the symbols referenced by it will also be kept in the output. For example, if the `func1()` is the entry point and, the `--gc-sections` is not specified or the `func2()` is prefix with `KEEP()`, then the `func2()` will be kept in the output, as well as the symbols being referenced by `func2()`.
+
+Since the first symbol (i.e. the address of the first instruction) to be linked is the origin of the linking procedure, so that's why
+
+> The first instruction to execute in a program is called the entry point.
+
+There are several ways to set the entry point. The linker will set the entry point by trying each of the following methods in order, and stopping when one of them succeeds:
+
+> - the `-e' entry command-line option;
+> - the ENTRY(symbol) command in a linker script;
+> - the value of a target specific symbol, if it is defined; For many targets this is start, but PE and BeOS based systems for example check a list of possible entry symbols, matching the first one found.
+> - the address of the first byte of the `.text' section, if present;
+> - The address 0.
+
+The Linker will linked the symbols being referenced after the first instruction.
+
+**Note:** The entry point is only to tell the linker from which instruction to start the linker procedure. It may not be the first instruction to run after reset!
 
 
 ## What is LMA and VMA ##
@@ -12,6 +66,7 @@ Edited by: Guohui Xu
 LMA, shorted for Load Memory Address, specifies the address where an output section should be placed when downloading it. It influences what the final image looks like before running. The final image is a binary file containing 0 and 1, without any address and debug informations. Usually, a program should be loaded into flash so that it won't lost when power off. Thus, all output sections should be located at flash region by specifying the LMA.
 
 VMA, Virtual Memory Address, specifies the address of a symbol when it is referenced in code at run time. For example, a viariable `x` is assigned with `1` in source code, before linking we don't know what the address of `x` is, so that we just assign `1` to a symbol. During linking, as we specifying the VMA, the linker then know where the `x` is at run time, then it will tell the program that the `1` should be put into the run time address of the `x`.
+
 
 ## Reference the symbol defined in linker script in your source code ##
 

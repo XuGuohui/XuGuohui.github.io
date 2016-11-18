@@ -293,9 +293,52 @@ img {
 <body>
 <h1>Linker Script</h1>
 <hr />
-<p>Last updated: 2016/11/1  <br />
+<p>Last updated: 2016/11/19 <br />
 Edited by: Guohui Xu</p>
 <h3><a href="https://github.com/XuGuohui/XuGuohui.github.io/blob/master/markdown/Gists/LinkerScript.md">Contribute to this file</a></h3>
+<h2>How the entry point effect the link output</h2>
+<p>In general, everything exits for some reason, the same as the entry point when linking a program. Let's image this scene:</p>
+<ol>
+<li>We have a program, the source code of which is made up of three functions: <code>funca()</code>, <code>func2()</code> and <code>func3()</code>.</li>
+<li>Both <code>func1()</code> and <code>func2()</code> invoke the <code>func3()</code>.</li>
+</ol>
+<p>Then how will the program execute? It depends on the link behaviour. But how does the linker know where to begin the link procedure? </p>
+<ol>
+<li>Link the <code>func1()</code> and <code>func3()</code>?</li>
+<li>Link the <code>func2()</code> and <code>func3()</code>?</li>
+</ol>
+<p>To get this question resolved, we should knoe how does the linker behave during linking. The compiler compiles the source code and generates the object files, which contain the symbols to be linked together. When linking, the linker checks what symbols are needed and what should be discarded. For instance, if the <code>func1()</code> is needed, then <code>func3()</code> is also needed in output, since the <code>func1()</code> references the <code>func3()</code>. Similarly, if the <code>func2()</code> is needed. then <code>func3()</code> is also needed in output.</p>
+<p>But how does the linker know the symbol to be linked first to finally generate the target program? <code>func1()</code> or <code>func2()</code>? So, we need to tell the linker the first instruction to begin the link procedure, that is what the entry point does. If we specify the entry point to be <code>func1()</code> (i.e. the address of the first instruction of <code>func1()</code>), then the linker will link symbols begining with the <code>func1()</code>, which will result the final program running like this:</p>
+<p><code>func1() -&gt; func3() -&gt; exit</code></p>
+<p>If we specify the entry point to be <code>func2()</code>, then the linker will link symbols begining with the <code>func2()</code>, which will result the final program running like this:</p>
+<p><code>func2() -&gt; func3() -&gt; exit</code></p>
+<p>If we specify the entry point to be <code>func3()</code>, then the linker will link symbols begining with the <code>func3()</code>, which will result the final program running like this:</p>
+<p><code>func3() -&gt; exit</code></p>
+<p>After all referenced symbols are linked, the unreferenced symbols will be discarded if <code>--gc-sections</code> is specified when linking, or they are kept in final program. If the <code>--gc-sections</code> is specified, you can still keep some symbols by prefix the <code>KEEP()</code> keyword in linker script.</p>
+<p><strong>Note</strong> : If a symbol is kept in the output because of one of the following situation:</p>
+<ol>
+<li>It is specified as the entry point</li>
+<li>It is referenced by previously linked symbols</li>
+<li>It is unreferenced but <code>--gc-sections</code> is not specified</li>
+<li>It is prefix with the <code>KEEP()</code> keyword in linker script</li>
+</ol>
+<p>then the symbols referenced by it will also be kept in the output. For example, if the <code>func1()</code> is the entry point and, the <code>--gc-sections</code> is not specified or the <code>func2()</code> is prefix with <code>KEEP()</code>, then the <code>func2()</code> will be kept in the output, as well as the symbols being referenced by <code>func2()</code>.</p>
+<p>Since the first symbol (i.e. the address of the first instruction) to be linked is the origin of the linking procedure, so that's why</p>
+<blockquote>
+<p>The first instruction to execute in a program is called the entry point.</p>
+</blockquote>
+<p>There are several ways to set the entry point. The linker will set the entry point by trying each of the following methods in order, and stopping when one of them succeeds:</p>
+<blockquote>
+<ul>
+<li>the `-e' entry command-line option;</li>
+<li>the ENTRY(symbol) command in a linker script;</li>
+<li>the value of a target specific symbol, if it is defined; For many targets this is start, but PE and BeOS based systems for example check a list of possible entry symbols, matching the first one found.</li>
+<li>the address of the first byte of the `.text' section, if present;</li>
+<li>The address 0.</li>
+</ul>
+</blockquote>
+<p>The Linker will linked the symbols being referenced after the first instruction.</p>
+<p><strong>Note:</strong> The entry point is only to tell the linker from which instruction to start the linker procedure. It may not be the first instruction to run after reset!</p>
 <h2>What is LMA and VMA</h2>
 <p>LMA, shorted for Load Memory Address, specifies the address where an output section should be placed when downloading it. It influences what the final image looks like before running. The final image is a binary file containing 0 and 1, without any address and debug informations. Usually, a program should be loaded into flash so that it won't lost when power off. Thus, all output sections should be located at flash region by specifying the LMA.</p>
 <p>VMA, Virtual Memory Address, specifies the address of a symbol when it is referenced in code at run time. For example, a viariable <code>x</code> is assigned with <code>1</code> in source code, before linking we don't know what the address of <code>x</code> is, so that we just assign <code>1</code> to a symbol. During linking, as we specifying the VMA, the linker then know where the <code>x</code> is at run time, then it will tell the program that the <code>1</code> should be put into the run time address of the <code>x</code>.</p>

@@ -12,4 +12,4 @@ Anyone can **NOT** copy and paste these articles and gists or part of them to so
 
 # License
 
-See the license [here](https://github.com/XuGuohui/XuGuohui.github.io/blob/master/LICENSE).
+See the license [here](./LICENSE).

@@ -12,4 +12,4 @@ Anyone can **NOT** copy and paste these articles and gists or part of them to so
 
 # License
 
-See the license [here](./LICENSE).
+See the license [here](./LICENSE.txt).

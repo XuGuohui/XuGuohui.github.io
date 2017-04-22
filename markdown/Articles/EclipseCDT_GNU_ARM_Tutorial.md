@@ -4,8 +4,6 @@
 Last updated: 2015/04/09    
 Edited by: Guohui Xu
 
-### [Contribute to this file](https://github.com/XuGuohui/XuGuohui.github.io/blob/master/markdown/Articles/EclipseCDT_GNU_ARM_Tutorial.md)###
-
 
 ## Resources Preparation ##
 

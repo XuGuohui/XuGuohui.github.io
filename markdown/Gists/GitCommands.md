@@ -69,20 +69,33 @@ Create the tracking between local branch and remote branch. So that you can use 
 Create the tracking between local `BRANCH-NAME` and remote `BRANCH-NAME`. It will track both of the `pull` and `push` and override the `pull` tracking that created by `git branch --set-upstream-to=HOST-NAME/BRANCH-NAME BRANCH-NAME`. So that you can use the `git pull` and `git push` without specifying the remote branch and local branch. It will pull(push) the tracked remote(local) branch to the current local(remote) branch.
 
 ### git merge [HOST-NAME/]BRANCH-NAME ###
-### git reset --hard COMMIT-ID ###
-### git checkout -- FILE-NAME ###
-### git reset HEAD FILE-NAME ###
-### git rebase BRANCH-NAME ###
-### git diff FILE-NAME ###
-### git diff BRANCH1-NAME BRANCH2-NAME ###
-### git remote add HOST-NAME URL ###
-### git remote show HOST-NAME ###
-### git clone URL ###
-### git config user.name "USER-NAME" ###
-### git config user.email "EMAIL-ADDR" ###
-### git remote set-head origin -a ###
-### git fetch origin [BRANCH-NAME] ###
-### git rev-parse --abbrev-ref HEAD ###
-### git cherry-pick COMMIT-ID ### 
 
-version v0.1
+### git reset --hard COMMIT-ID ###
+
+### git checkout -- FILE-NAME ###
+
+### git reset HEAD FILE-NAME ###
+
+### git rebase BRANCH-NAME ###
+
+### git diff FILE-NAME ###
+
+### git diff BRANCH1-NAME BRANCH2-NAME ###
+
+### git remote add HOST-NAME URL ###
+
+### git remote show HOST-NAME ###
+
+### git clone URL ###
+
+### git config user.name "USER-NAME" ###
+
+### git config user.email "EMAIL-ADDR" ###
+
+### git remote set-head origin -a ###
+
+### git fetch origin [BRANCH-NAME] ###
+
+### git rev-parse --abbrev-ref HEAD ###
+
+### git cherry-pick COMMIT-ID ### 

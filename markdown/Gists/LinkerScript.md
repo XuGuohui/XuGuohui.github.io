@@ -4,8 +4,6 @@
 Last updated: 2016/11/19   
 Edited by: Guohui Xu
 
-### [Contribute to this file](https://github.com/XuGuohui/XuGuohui.github.io/blob/master/markdown/Gists/LinkerScript.md)###
-
 
 ## How the entry point effect the link output
 

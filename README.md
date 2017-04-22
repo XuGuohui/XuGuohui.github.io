@@ -8,7 +8,8 @@ Anyone can **NOT** copy and paste these articles and gists or part of them to so
 
 # Gists
 
-- [LinkerScript](./markdown/Gists/LinkerScript.md)
+- [Linker Script](./markdown/Gists/LinkerScript.md)
+- [Git Commands](./markdown/Gists/GitCommands.md)
 
 # License
 

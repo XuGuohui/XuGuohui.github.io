@@ -61,3 +61,23 @@ void setup() {
     Log.info("0x%04lX -> str1: %s", (uint32_t)&str1, str1.c_str());
 }
 ```
+
+Output:
+```
+0000002908 [app] INFO: Application started
+0000002908 [app] INFO: int&& is lvalue reference: false
+0000002909 [app] INFO: 0x2003E65C -> l_ref_a
+0000002910 [app] INFO: 0x200179B4 -> r_ref_a
+0000002910 [app] INFO: 0x2003E65C -> l_ref_b
+0000002911 [app] INFO: func1(), 0x2003E65C -> x: 12
+0000002911 [app] INFO: int& is lvalue reference:  true
+0000002912 [app] INFO: func1(), 0x200179B4 -> x: 11
+0000002912 [app] INFO: int& is lvalue reference:  true
+0000002913 [app] INFO: func1(), 0x2003E65C -> x: 13
+0000002913 [app] INFO: int& is lvalue reference:  true
+0000002914 [app] INFO: 0x200179B8 -> temp
+0000002914 [app] INFO: 0x200179B8 -> str: hello
+0000002915 [app] INFO: 0x200179C8 -> temp
+0000002915 [app] INFO: 0x200179C8 -> str1: hello world
+```
+

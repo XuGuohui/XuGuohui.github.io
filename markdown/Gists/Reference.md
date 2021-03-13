@@ -3,81 +3,120 @@
 ## Gist
 
 - lref can bind lvalue only
+
 - rref can bind rvalue only
-- const lref can bind both, and const lvalue, const rvalue
+
+- const lref can bind lvalue, rvalue and const lvalue (NO const rvalue)
 
 - Do not return reference in function
 
 - value reference and value reference themselves are lvalue
 
-- const lvalue reference can bind rvalue (for example a returned value), this will extend the life cycle of the rvalue:
+- const lvalue reference can bind rvalue (for example a returned value), this will extend the life cycle of the rvalue
+
+- If a const value is bind with rvalue reference, then it is located in RAM and has address
 
 ## Practice
 
 ```
+#include "Particle.h"
 SYSTEM_MODE(MANUAL);
-
 SerialLogHandler l(LOG_LEVEL_INFO);
 
-int l_value = 10;
+class Test {
 
-void func1 (int& x) {
-    x++;
-    Log.info("func1(), 0x%04lX -> x: %d", (uint32_t)&x, x);
+};
 
-    Log.info("int& is lvalue reference: %s", std::is_lvalue_reference<int&>::value ? " true" : "false");
-    return;
+int a = 0; // lvalue
+const int b = 1; //lvalue
+
+// lvalue
+Test testLvalue; // global lvalue that is allocated in static RAM
+const Test testConstLvalue; // Global const lvalue that is allocated in static RAM
+
+// lvalue reference can bind non const lvalue
+Test& testLvalueRefA = testLvalue;                                          // lvalue reference can bind non const lvalue
+
+// const lvalue reference can bind all kinds of lvalue and rvalue
+const Test& testConstLvalueRefA = testLvalue;                               // const lvalue reference can bind lvalue
+const Test& testConstLvalueRefB = testConstLvalue;                          // const lvalue reference can bind const lvalue
+const Test& testConstLvalueRefC = ( []()->Test{return Test();} )();         // const lvalue reference can bind returned value (rvalue)
+const Test& testConstLvalueRefD = ( []()->const Test{ return Test();} )();  // const lvalue reference can bind returned const value (const rvalue)
+const int& intConstLvalueRefE = 1;                                          // const lvalue reference can bind const value (rvalue)
+const int& intConstLvalueRefF = a++;                                        // const lvalue reference can bind intermediate value (rvalue)
+const int& intConstLvalueRefG = ( []()->const int{ return 10;} )();         // const lvalue reference can bind returned const pure value (rvalue)
+
+// rvalue reference can bind non const rvalue and pure value
+Test&& testRvalueRefA = ( []()->Test{return Test();} )();                   // rvalue reference can bind returned value (rvalue)
+int&& intRvalueRefB = 1;                                                    // rvalue reference can bind const value (rvalue)
+int&& intRvalueRefC = a++;                                                  // rvalue reference can bind intermediate value (rvalue)
+int&& intRvalueRefD = ( []()->const int{ return 10;} )();                   // rvalue reference can bind returned const pure value (rvalue)
+
+// const rvalue reference can bind all kinds of rvalue
+const Test&& testConstRvalueRefA = ( []()->Test{return Test();} )();        // const rvalue reference can bind returned value (rvalue)
+const Test&& testConstRvalueRefB = ( []()->const Test{ return Test();} )(); // const rvalue reference can bind returned const value (const rvalue)
+const int&& intConstRvalueRefC = 1;                                         // const rvalue reference can bind const value (rvalue)
+const int&& intConstRvalueRefD = a++;                                       // const rvalue reference can bind intermediate value (rvalue)
+const int&& intConstRvalueRefE = ( []()->const int{ return 10;} )();        // const rvalue reference can bind returned const pure value (rvalue)
+
+// lvalue reference can be initialized with non const lvalue reference and non const rvalue reference
+Test& testLvalueRefInitA = testLvalueRefA;                                  // lvalue reference can be initialized with lvalue reference
+Test& testLvalueRefInitB = testRvalueRefA;                                  // lvalue reference can be initialized with rvalue reference
+
+// const lvalue reference can be initialized with all kinds of reference
+const Test& testConstLvalueRefInitA = testLvalueRefA;                       // const lvalue reference can be initialized with lvalue reference
+const Test& testConstLvalueRefInitB = testConstLvalueRefA;                  // const lvalue reference can be initialized with const lvalue reference
+const Test& testConstLvalueRefInitC = testRvalueRefA;                       // const lvalue reference can be initialized with rvalue reference
+const Test& testConstLvalueRefInitD = testConstRvalueRefA;                  // const lvalue reference can be initialized with const rvalue reference
+
+// Both const and non const rvalue reference cannot be initialized with any kind of reference
+// That's why we need std::move
+void notBuildableIfPassRef(Test&& test) {
+}
+void notBuildableIfPassRefConst(const Test&& test) {
 }
 
-String func2() { // We are not reterning a reference!!!
-    String temp("hello");
-    Log.info("0x%04lX -> temp", (uint32_t)&temp);
-    return temp;
+// lvalue reference can be initialized with non const rvalue reference
+// That's why we need std::forward
+void rvalueRefToLvalueRef(Test& test) {
+    Log.info("test is lvalue reference: %s", std::is_lvalue_reference<Test&>::value ? " true" : "false");
+}
+
+String refCanExtendTempVarLifeCycle() { // We are not reterning reference!!
+    return String("hello");;
 }
 
 void setup() {
     while (!Serial.isConnected());
     Log.info("Application started");
 
-    int& l_ref_a = l_value;
-    int&& r_ref_a = l_value++; // The rvalue is allocated in stack
-    int& l_ref_b = l_ref_a;
+    // A rvalue reference being bind with a const value is writeable
+    intRvalueRefB++;
+    Log.info("0x%04lX -> intRvalueRefB: %d", (uint32_t)&intRvalueRefB, intRvalueRefB);
 
-    Log.info("int&& is lvalue reference: %s", std::is_lvalue_reference<int&&>::value ? " true" : "false");
+    // A rvalue reference being bind with const pure value is writeable
+    intRvalueRefD++;
+    Log.info("0x%04lX -> intRvalueRefD: %d", (uint32_t)&intRvalueRefD, intRvalueRefD);
 
-    Log.info("0x%04lX -> l_ref_a", (uint32_t)&l_ref_a);
-    Log.info("0x%04lX -> r_ref_a", (uint32_t)&r_ref_a);
-    Log.info("0x%04lX -> l_ref_b", (uint32_t)&l_ref_b);
+    rvalueRefToLvalueRef(testRvalueRefA);
 
-    func1(l_ref_a);
-    func1(r_ref_a);
-    func1(l_ref_b);
+    const String& str1 = refCanExtendTempVarLifeCycle(); // const lvalue reference is not writeable
+    Log.info("str: %s", str1.c_str());
 
-    const String& str = func2();
-    Log.info("0x%04lX -> str: %s", (uint32_t)&str, str.c_str());
+    String&& str2 = refCanExtendTempVarLifeCycle(); // non const rvalue reeference is writeable
+    str2.concat(" world");
+    Log.info("str2: %s", str2.c_str());
 
-    String&& str1 = func2();
-    str1.concat(" world");
-    Log.info("0x%04lX -> str1: %s", (uint32_t)&str1, str1.c_str());
+    // notBuildableIfPassRef(testLvalueRefA);
+    // notBuildableIfPassRef(testConstLvalueRefA);
+    // notBuildableIfPassRef(testRvalueRefA);
+    // notBuildableIfPassRef(testConstRvalueRefA);
+    notBuildableIfPassRef(std::move(testLvalueRefA));
+    notBuildableIfPassRef(std::move(testRvalueRefA));
+    notBuildableIfPassRefConst(std::move(testConstLvalueRefA));
+    notBuildableIfPassRefConst(std::move(testConstRvalueRefA));
 }
+
 ```
 
-Output:
-```
-0000002908 [app] INFO: Application started
-0000002908 [app] INFO: int&& is lvalue reference: false
-0000002909 [app] INFO: 0x2003E65C -> l_ref_a
-0000002910 [app] INFO: 0x200179B4 -> r_ref_a
-0000002910 [app] INFO: 0x2003E65C -> l_ref_b
-0000002911 [app] INFO: func1(), 0x2003E65C -> x: 12
-0000002911 [app] INFO: int& is lvalue reference:  true
-0000002912 [app] INFO: func1(), 0x200179B4 -> x: 11
-0000002912 [app] INFO: int& is lvalue reference:  true
-0000002913 [app] INFO: func1(), 0x2003E65C -> x: 13
-0000002913 [app] INFO: int& is lvalue reference:  true
-0000002914 [app] INFO: 0x200179B8 -> temp
-0000002914 [app] INFO: 0x200179B8 -> str: hello
-0000002915 [app] INFO: 0x200179C8 -> temp
-0000002915 [app] INFO: 0x200179C8 -> str1: hello world
-```
 

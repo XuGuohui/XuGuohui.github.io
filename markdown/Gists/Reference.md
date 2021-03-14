@@ -11,95 +11,97 @@ class Test {
 ```
 
 - lvalue
-```
-int a = 10;
-Test testLvalue;
-```
+    ```
+    int a = 10;
+    Test testLvalue;
+    ```
 
 - const lvalue
-```
-const int b = 20;
-const Test testConstLvalue;
-```
+    ```
+    const int b = 20;
+    const Test testConstLvalue;
+    ```
 
 - lvalue reference can bind lvalue
-```
-Test& testLvalueRefA = testLvalue;
-```
+    ```
+    Test& testLvalueRefA = testLvalue;
+    ```
 
 - const lvalue reference can bind lvalue, const lvalue, rvalue, const rvalue
-```
-const Test& testConstLvalueRefA = testLvalue;                               // const lvalue reference can bind lvalue
-const Test& testConstLvalueRefB = testConstLvalue;                          // const lvalue reference can bind const lvalue
-const Test& testConstLvalueRefC = ( []()->Test{return Test();} )();         // const lvalue reference can bind returned value (rvalue)
-const Test& testConstLvalueRefD = ( []()->const Test{ return Test();} )();  // const lvalue reference can bind returned const value (const rvalue)
-const int& intConstLvalueRefE = 1;                                          // const lvalue reference can bind const value (rvalue)
-const int& intConstLvalueRefF = a++;                                        // const lvalue reference can bind intermediate value (rvalue)
-const int& intConstLvalueRefG = ( []()->const int{ return 10;} )();         // const lvalue reference can bind returned const pure value (rvalue)
-```
+    ```
+    const Test& testConstLvalueRefA = testLvalue;                               // const lvalue reference can bind lvalue
+    const Test& testConstLvalueRefB = testConstLvalue;                          // const lvalue reference can bind const lvalue
+    const Test& testConstLvalueRefC = ( []()->Test{return Test();} )();         // const lvalue reference can bind returned value (rvalue)
+    const Test& testConstLvalueRefD = ( []()->const Test{ return Test();} )();  // const lvalue reference can bind returned const value (const rvalue)
+    const int& intConstLvalueRefE = 1;                                          // const lvalue reference can bind const value (rvalue)
+    const int& intConstLvalueRefF = a++;                                        // const lvalue reference can bind intermediate value (rvalue)
+    const int& intConstLvalueRefG = ( []()->const int{ return 10;} )();         // const lvalue reference can bind returned const pure value (rvalue)
+    ```
 
 - rvalue reference can bind rvalue and const pure value
-```
-Test&& testRvalueRefA = ( []()->Test{return Test();} )();                   // rvalue reference can bind returned non const value (rvalue)
-int&& intRvalueRefB = 1;                                                    // rvalue reference can bind const value (rvalue)
-int&& intRvalueRefC = a++;                                                  // rvalue reference can bind intermediate value (rvalue)
-int&& intRvalueRefD = ( []()->const int{ return 10;} )();                   // rvalue reference can bind returned const pure value (rvalue)
-```
+    ```
+    Test&& testRvalueRefA = ( []()->Test{return Test();} )();                   // rvalue reference can bind returned non const value (rvalue)
+    int&& intRvalueRefB = 1;                                                    // rvalue reference can bind const value (rvalue)
+    int&& intRvalueRefC = a++;                                                  // rvalue reference can bind intermediate value (rvalue)
+    int&& intRvalueRefD = ( []()->const int{ return 10;} )();                   // rvalue reference can bind returned const pure value (rvalue)
+    ```
 
 - const rvalue reference can bind rvalue and const rvalue
-```
-const Test&& testConstRvalueRefA = ( []()->Test{return Test();} )();        // const rvalue reference can bind returned value (rvalue)
-const Test&& testConstRvalueRefB = ( []()->const Test{ return Test();} )(); // const rvalue reference can bind returned const value (const rvalue)
-const int&& intConstRvalueRefC = 1;                                         // const rvalue reference can bind const value (rvalue)
-const int&& intConstRvalueRefD = a++;                                       // const rvalue reference can bind intermediate value (rvalue)
-const int&& intConstRvalueRefE = ( []()->const int{ return 10;} )();        // const rvalue reference can bind returned const pure value (rvalue)
-```
+    ```
+    const Test&& testConstRvalueRefA = ( []()->Test{return Test();} )();        // const rvalue reference can bind returned value (rvalue)
+    const Test&& testConstRvalueRefB = ( []()->const Test{ return Test();} )(); // const rvalue reference can bind returned const value (const rvalue)
+    const int&& intConstRvalueRefC = 1;                                         // const rvalue reference can bind const value (rvalue)
+    const int&& intConstRvalueRefD = a++;                                       // const rvalue reference can bind intermediate value (rvalue)
+    const int&& intConstRvalueRefE = ( []()->const int{ return 10;} )();        // const rvalue reference can bind returned const pure value (rvalue)
+    ```
 
 - lvalue reference can be initialized with lvalue reference and rvalue reference. When a function's argument is lvalue reference, we may pass a rvalue reference as the parameter, in which case the rvalue reference is converted to lvalue reference. That's why we need [`std::forward()`](https://en.cppreference.com/w/cpp/utility/forward).
-```
-Test& testLvalueRefInitA = testLvalueRefA;                                  // lvalue reference can be initialized with lvalue reference
-Test& testLvalueRefInitB = testRvalueRefA;                                  // lvalue reference can be initialized with rvalue reference
+    ```
+    Test& testLvalueRefInitA = testLvalueRefA;                                  // lvalue reference can be initialized with lvalue reference
+    Test& testLvalueRefInitB = testRvalueRefA;                                  // lvalue reference can be initialized with rvalue reference
 
-void rvalueRefToLvalueRef(Test& test) {
-    Log.info("test is lvalue reference: %s", std::is_lvalue_reference<Test&>::value ? " true" : "false");
-}
-rvalueRefToLvalueRef(testRvalueRefA);
-```
+    void rvalueRefToLvalueRef(Test& test) {
+        Log.info("test is lvalue reference: %s", std::is_lvalue_reference<Test&>::value ? " true" : "false");
+    }
+    rvalueRefToLvalueRef(testRvalueRefA);
+    ```
 
 - const lvalue reference can be initialized with lvalue reference, rvalue reference, const lvalue reference and const rvalue reference. That's why the copy constructor's argument is const lvalue reference.
-```
-const Test& testConstLvalueRefInitA = testLvalueRefA;                       // const lvalue reference can be initialized with lvalue reference
-const Test& testConstLvalueRefInitB = testConstLvalueRefA;                  // const lvalue reference can be initialized with const lvalue reference
-const Test& testConstLvalueRefInitC = testRvalueRefA;                       // const lvalue reference can be initialized with rvalue reference
-const Test& testConstLvalueRefInitD = testConstRvalueRefA;                  // const lvalue reference can be initialized with const rvalue reference
-```
+    ```
+    const Test& testConstLvalueRefInitA = testLvalueRefA;                       // const lvalue reference can be initialized with lvalue reference
+    const Test& testConstLvalueRefInitB = testConstLvalueRefA;                  // const lvalue reference can be initialized with const lvalue reference
+    const Test& testConstLvalueRefInitC = testRvalueRefA;                       // const lvalue reference can be initialized with rvalue reference
+    const Test& testConstLvalueRefInitD = testConstRvalueRefA;                  // const lvalue reference can be initialized with const rvalue reference
+    ```
 
 - rvalue reference and const rvalue reference **cannot** be initialized with any kind of reference. All kind of references themselves are lvalue. That's why we need [`std::move()`](https://en.cppreference.com/w/cpp/utility/move). For move constructor, the argument is rvalue reference. To pass parameter to move constructor, the parameter need to be rvalue, or the returned value of `std::move()`.
-```
-void notBuildableIfPassRef(Test&& test) {
-}
-void notBuildableIfPassRefConst(const Test&& test) {
-}
+    ```
+    void notBuildableIfPassRef(Test&& test) {
+    }
+    void notBuildableIfPassRefConst(const Test&& test) {
+    }
 
-notBuildableIfPassRef(std::move(testLvalueRefA));
-notBuildableIfPassRef(std::move(testRvalueRefA));
-notBuildableIfPassRefConst(std::move(testConstLvalueRefA));
-notBuildableIfPassRefConst(std::move(testConstRvalueRefA));
-```
+    notBuildableIfPassRef(std::move(testLvalueRefA));
+    notBuildableIfPassRef(std::move(testRvalueRefA));
+    notBuildableIfPassRefConst(std::move(testConstLvalueRefA));
+    notBuildableIfPassRefConst(std::move(testConstRvalueRefA));
+    ```
 
 - Do not return any kind of reference in function
 
 - Since rvalue reference and const rvalue reference can bind rvalue (for example a returned value), this feature can be used to extend the life cycle of a temporary variable.
-```
-String refCanExtendTempVarLifeCycle() { // We are not reterning reference!!
-    return String("hello");;
-}
+    ```
+    String refCanExtendTempVarLifeCycle() { // We are not reterning reference!!
+        return String("hello");;
+    }
 
-const String& str1 = refCanExtendTempVarLifeCycle(); // const lvalue reference is not writeable
+    const String& str1 = refCanExtendTempVarLifeCycle(); // const lvalue reference is not writeable
 
-String&& str2 = refCanExtendTempVarLifeCycle(); // non const rvalue reeference is writeable
-str2.concat(" world");
-```
+    String&& str2 = refCanExtendTempVarLifeCycle(); // non const rvalue reeference is writeable
+    str2.concat(" world");
+    ```
+    
+- lvalue reference and rvalue reference are readable and **writeable**. Thus, even if the const pure value is bind to rvalue reference, the const pure value is allocated in RAM and it has address, and since rvalue reference is writeable, we can modify the content of the address.
 
 ## Practice
 

@@ -2,7 +2,7 @@
 
 ## Gist
 
-**Unless otherwise stated, the lvalue, rvalue, lvalue reference and rvalue reference mentioned herein are NON const**
+*Unless otherwise stated, the lvalue, rvalue, lvalue reference and rvalue reference mentioned herein are NON const*
 
 ```
 class Test {
@@ -55,7 +55,7 @@ class Test {
     const int&& intConstRvalueRefE = ( []()->const int{ return 10;} )();        // const rvalue reference can bind returned const pure value (rvalue)
     ```
 
-- lvalue reference can be initialized with lvalue reference and rvalue reference. When a function's argument is lvalue reference, we may pass a rvalue reference as the parameter, in which case the rvalue reference is converted to lvalue reference. That's why we need [`std::forward()`](https://en.cppreference.com/w/cpp/utility/forward).
+- lvalue reference can be initialized with lvalue reference and rvalue reference. When a function's parameter is lvalue reference, we may pass a rvalue reference as the parameter, in which case the rvalue reference is converted to lvalue reference. That's why we need [`std::forward()`](https://en.cppreference.com/w/cpp/utility/forward).
     ```
     Test& testLvalueRefInitA = testLvalueRefA;                                  // lvalue reference can be initialized with lvalue reference
     Test& testLvalueRefInitB = testRvalueRefA;                                  // lvalue reference can be initialized with rvalue reference
@@ -66,7 +66,7 @@ class Test {
     rvalueRefToLvalueRef(testRvalueRefA);
     ```
 
-- const lvalue reference can be initialized with lvalue reference, rvalue reference, const lvalue reference and const rvalue reference. That's why the copy constructor's argument is const lvalue reference.
+- const lvalue reference can be initialized with lvalue reference, rvalue reference, const lvalue reference and const rvalue reference. That's why the copy constructor's parameter is const lvalue reference.
     ```
     const Test& testConstLvalueRefInitA = testLvalueRefA;                       // const lvalue reference can be initialized with lvalue reference
     const Test& testConstLvalueRefInitB = testConstLvalueRefA;                  // const lvalue reference can be initialized with const lvalue reference
@@ -74,7 +74,7 @@ class Test {
     const Test& testConstLvalueRefInitD = testConstRvalueRefA;                  // const lvalue reference can be initialized with const rvalue reference
     ```
 
-- rvalue reference and const rvalue reference **cannot** be initialized with any kind of reference. All kind of references themselves are lvalue. That's why we need [`std::move()`](https://en.cppreference.com/w/cpp/utility/move). For move constructor, the argument is rvalue reference. To pass parameter to move constructor, the parameter need to be rvalue, or the returned value of `std::move()`.
+- rvalue reference and const rvalue reference *cannot* be initialized with any kind of reference. All kind of references themselves are lvalue. That's why we need [`std::move()`](https://en.cppreference.com/w/cpp/utility/move). For move constructor, the parameter is rvalue reference. To pass parameter to move constructor, the parameter need to be rvalue, or the returned value of `std::move()`.
     ```
     void notBuildableIfPassRef(Test&& test) {
     }
@@ -101,7 +101,25 @@ class Test {
     str2.concat(" world");
     ```
     
-- lvalue reference and rvalue reference are readable and **writeable**. Thus, even if the const pure value is bind to rvalue reference, the const pure value is allocated in RAM and it has address, and since rvalue reference is writeable, we can modify the content of the address.
+- lvalue reference and rvalue reference are readable and *writeable*. Thus, even if the const pure value is bind to rvalue reference, the const pure value is allocated in RAM and it has address, and since rvalue reference is writeable, we can modify the content of the address.
+
+- When the parameter of a function is lvalue, all kind of references can be passed in. If we pass in a reference, then a copy constructor will be called, since *all kind of references themselves are lvalue*. To get the move constructor called, we need to use `std::move()`.
+```
+void acceptRef(Test test) {
+}
+
+// Copy constructor will be called
+acceptRef(testLvalueRefA);
+acceptRef(testConstLvalueRefA);
+acceptRef(testRvalueRefA);
+acceptRef(testConstRvalueRefA);
+
+// Move constructor will be called
+acceptRef(std::move(testLvalueRefA));
+acceptRef(std::move(testConstLvalueRefA));
+acceptRef(std::move(testRvalueRefA));
+acceptRef(std::move(testConstRvalueRefA));
+```
 
 ## Practice
 

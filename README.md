@@ -10,6 +10,7 @@ Anyone can **NOT** copy and paste these articles and gists or part of them to so
 
 - [Linker Script](./markdown/Gists/LinkerScript.md)
 - [Git Commands](./markdown/Gists/GitCommands.md)
+- [C++ Reference](./markdown/Gists/Reference.md)
 
 # License
 

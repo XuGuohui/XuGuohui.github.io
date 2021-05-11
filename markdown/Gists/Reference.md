@@ -90,7 +90,7 @@ class Test {
 - Do not return any kind of reference in function
 
 - Since rvalue reference and const rvalue reference can bind rvalue (for example a returned value), this feature can be used to extend the life cycle of a temporary variable.
-    ```
+    ```c
     String refCanExtendTempVarLifeCycle() { // We are not reterning reference!!
         return String("hello");;
     }
@@ -104,26 +104,27 @@ class Test {
 - lvalue reference and rvalue reference are readable and *writeable*. Thus, even if the const pure value is bind to rvalue reference, the const pure value is allocated in RAM and it has address, and since rvalue reference is writeable, we can modify the content of the address.
 
 - When the parameter of a function is lvalue, all kind of references can be passed in. If we pass in a reference, then a copy constructor will be called, since *all kind of references themselves are lvalue*. To get the move constructor called, we need to use `std::move()`.
-```
-void acceptRef(Test test) {
-}
 
-// Copy constructor will be called
-acceptRef(testLvalueRefA);
-acceptRef(testConstLvalueRefA);
-acceptRef(testRvalueRefA);
-acceptRef(testConstRvalueRefA);
+    ```c
+    void acceptRef(Test test) {
+    }
 
-// Move constructor will be called
-acceptRef(std::move(testLvalueRefA));
-acceptRef(std::move(testConstLvalueRefA));
-acceptRef(std::move(testRvalueRefA));
-acceptRef(std::move(testConstRvalueRefA));
-```
+    // Copy constructor will be called
+    acceptRef(testLvalueRefA);
+    acceptRef(testConstLvalueRefA);
+    acceptRef(testRvalueRefA);
+    acceptRef(testConstRvalueRefA);
+
+    // Move constructor will be called
+    acceptRef(std::move(testLvalueRefA));
+    acceptRef(std::move(testConstLvalueRefA));
+    acceptRef(std::move(testRvalueRefA));
+    acceptRef(std::move(testConstRvalueRefA));
+    ```
 
 ## Practice
 
-```
+```c
 #include "Particle.h"
 SYSTEM_MODE(MANUAL);
 SerialLogHandler l(LOG_LEVEL_INFO);
@@ -221,7 +222,6 @@ void setup() {
     notBuildableIfPassRefConst(std::move(testConstLvalueRefA));
     notBuildableIfPassRefConst(std::move(testConstRvalueRefA));
 }
-
 ```
 
 
